@@ -1,7 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://dkxsagjbhxj75"]
+[gd_scene load_steps=9 format=3 uid="uid://dkxsagjbhxj75"]
 
 [ext_resource type="PackedScene" uid="uid://t4owcg42its3" path="res://Scene/player.tscn" id="1_sdscx"]
 [ext_resource type="Texture2D" uid="uid://05dwnstp85rj" path="res://Assets/Sprites/terrain.png" id="2_ctl4x"]
+[ext_resource type="Texture2D" uid="uid://bh681cgdaw8sn" path="res://Assets/Sprites/Backgrounds/06.png" id="3_wuiko"]
+[ext_resource type="Texture2D" uid="uid://bar2ivbel2xio" path="res://Assets/Sprites/Backgrounds/03.png" id="4_hpxoq"]
+[ext_resource type="Texture2D" uid="uid://c71f4fr4uxeih" path="res://Assets/Sprites/Cloud.png" id="5_jnhpw"]
+[ext_resource type="Script" path="res://Scene/dialogue.gd" id="6_ad0x6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_73cv3"]
 texture = ExtResource("2_ctl4x")
@@ -1048,3 +1052,78 @@ layer_0/tile_data = PackedInt32Array(720892, 0, 0, 786428, 0, 1, 851964, 0, 2, 9
 position = Vector2(19370, -1746)
 scale = Vector2(2.24, 1)
 zoom = Vector2(0.03, 0.03)
+
+[node name="backgrounds" type="Node2D" parent="."]
+
+[node name="background" type="Sprite2D" parent="backgrounds"]
+position = Vector2(14152, -2408)
+scale = Vector2(6.92, 6.92)
+texture = ExtResource("3_wuiko")
+
+[node name="background2" type="Sprite2D" parent="backgrounds"]
+position = Vector2(42472, -2408)
+scale = Vector2(6.92, 6.92)
+texture = ExtResource("3_wuiko")
+
+[node name="background4" type="Sprite2D" parent="backgrounds"]
+z_index = -1
+position = Vector2(14304, -5760)
+scale = Vector2(6.94, 6.94)
+texture = ExtResource("4_hpxoq")
+
+[node name="background3" type="Sprite2D" parent="backgrounds"]
+z_index = -1
+position = Vector2(42709, -5760)
+scale = Vector2(6.94, 6.94)
+texture = ExtResource("4_hpxoq")
+
+[node name="background5" type="Sprite2D" parent="backgrounds"]
+z_index = -1
+position = Vector2(42709, -5760)
+scale = Vector2(6.94, 6.94)
+texture = ExtResource("4_hpxoq")
+
+[node name="background6" type="Sprite2D" parent="backgrounds"]
+z_index = -2
+position = Vector2(30173, -10466)
+scale = Vector2(4.505, 4.505)
+texture = ExtResource("5_jnhpw")
+
+[node name="background7" type="Sprite2D" parent="backgrounds"]
+z_index = -2
+position = Vector2(7908, -10692)
+scale = Vector2(4.505, 4.505)
+texture = ExtResource("5_jnhpw")
+
+[node name="ColorRect" type="ColorRect" parent="backgrounds"]
+z_index = -3
+offset_left = 46755.0
+offset_top = -12450.0
+offset_right = 46774.8
+offset_bottom = -11950.0
+scale = Vector2(-2387.3, 13.085)
+color = Color(0.105882, 1, 1, 1)
+
+[node name="Dialogue box" type="Node2D" parent="."]
+position = Vector2(-5704, -4785)
+scale = Vector2(-96.7821, -78.6988)
+script = ExtResource("6_ad0x6")
+
+[node name="Label" type="Label" parent="Dialogue box"]
+modulate = Color(0, 0, 0, 1)
+layout_direction = 2
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -87.5472
+offset_top = 75.6047
+offset_right = 712.453
+offset_bottom = 175.605
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(-0.398, -0.558)
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 25
+text = "h"
