@@ -1,44 +1,54 @@
-extends Sprite2D
+extends CharacterBody2D
 
-var speed = 50
-var is_moving = false
+@export var speed = 50
+var gravity = 1000  # Adjust gravity as needed for better fall speed
 var is_attacking = false
 
 func _ready() -> void:
-	$AnimatedSprite2D.connect("animation_finished", Callable(self, "_on_animation_finished"))
-	
+	# Disconnect and reconnect signals to avoid duplicates
+	if $AnimatedSprite2D.is_connected("animation_finished", Callable(self, "_on_animated_sprite_2d_animation_finished")):
+		$AnimatedSprite2D.disconnect("animation_finished", Callable(self, "_on_animated_sprite_2d_animation_finished"))
 
-func _process(_delta: float) -> void:
+	$AnimatedSprite2D.connect("animation_finished", Callable(self, "_on_animated_sprite_2d_animation_finished"))
+
+func _physics_process(delta: float) -> void:
+	# Reset horizontal movement
+	velocity.x = 0  # Stop horizontal movement initially
+
+	# Handle gravity
+	if not is_on_floor():
+		velocity.y += gravity * delta  # Apply gravity to the vertical velocity
+	else:
+		velocity.y = 0  # Reset vertical velocity when on the ground
+
+	# Handle movement and attack
 	if not is_attacking:
-		player_move()
-		player_attack()
+		player_move()  # Handle movement
+		player_attack()  # Handle attacking
 
-# move player on X axis left and right
-func player_move():
-	is_moving = false
+	# Move the player using move_and_slide
+	move_and_slide()  # Apply movement
 
+func player_move() -> void:
+	# Handle horizontal movement
 	if Input.is_action_pressed("left"):
-		position.x -= speed
+		velocity.x = -speed  # Move left
 		$AnimatedSprite2D.flip_h = true
 		$AnimatedSprite2D.play("run")
-		is_moving = true
 	elif Input.is_action_pressed("right"):
-		position.x += speed
+		velocity.x = speed  # Move right
 		$AnimatedSprite2D.flip_h = false
 		$AnimatedSprite2D.play("run")
-		is_moving = true
-
-	# play idle when player not moving
-	if not is_moving and not is_attacking:
+	else:
 		$AnimatedSprite2D.play("idle")
 
-# player attack input
-func player_attack():
-	if Input.is_action_pressed("attack") and not is_attacking:
+func player_attack() -> void:
+	if Input.is_action_pressed("attacking") and not is_attacking:
 		$AnimatedSprite2D.play("attack")
 		is_attacking = true
-
+		# Optionally, you can also stop movement while attacking
+		velocity.x = 0  # Stop horizontal movement during attack
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if $AnimatedSprite2D.animation == "attack":
-		is_attacking = false;
+		is_attacking = false

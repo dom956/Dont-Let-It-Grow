@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://t4owcg42its3"]
+[gd_scene load_steps=16 format=3 uid="uid://b64gtv6b4yaxw"]
 
 [ext_resource type="Texture2D" uid="uid://bof32baslvugi" path="res://Assets/Sprites/Character/character_idle_0.png" id="1_hov3o"]
 [ext_resource type="Script" path="res://Scene/player.gd" id="1_u2guh"]
@@ -14,7 +14,10 @@
 [ext_resource type="Texture2D" uid="uid://supj8p1ofhm3" path="res://Assets/Sprites/Character/character_run_2.png" id="12_agcdr"]
 [ext_resource type="Texture2D" uid="uid://bggk6lmpndl87" path="res://Assets/Sprites/Character/character_run_3.png" id="13_3i6xx"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_okunr"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hpfk8"]
+size = Vector2(120, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b0ruk"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -63,19 +66,26 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("13_3i6xx")
 }],
-"loop": false,
+"loop": true,
 "name": &"run",
 "speed": 5.0
 }]
 
-[node name="Player" type="Sprite2D"]
-position = Vector2(413, 121)
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(-4, -1)
+collision_mask = 2
+slide_on_ceiling = false
 script = ExtResource("1_u2guh")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+light_mask = 2
+position = Vector2(149, 197)
+shape = SubResource("RectangleShape2D_hpfk8")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.71, 0.71)
-sprite_frames = SubResource("SpriteFrames_okunr")
-animation = &"run"
+position = Vector2(151, 124)
+sprite_frames = SubResource("SpriteFrames_b0ruk")
+animation = &"attack"
 autoplay = "idle"
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
