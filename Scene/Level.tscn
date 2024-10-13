@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dkxsagjbhxj75"]
+[gd_scene load_steps=17 format=3 uid="uid://dkxsagjbhxj75"]
 
 [ext_resource type="PackedScene" uid="uid://b64gtv6b4yaxw" path="res://Scene/player.tscn" id="1_sdscx"]
 [ext_resource type="Texture2D" uid="uid://05dwnstp85rj" path="res://Assets/Sprites/terrain.png" id="2_ctl4x"]
@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://c71f4fr4uxeih" path="res://Assets/Sprites/Cloud.png" id="5_jnhpw"]
 [ext_resource type="Script" path="res://Scene/dialogue.gd" id="6_ad0x6"]
 [ext_resource type="FontFile" uid="uid://cle4m335qoyg8" path="res://Assets/fonts/linux-libertine/LinLibertine_5.3.0_2012_07_02/LinLibertineOTF_5.3.0_2012_07_02/LinLibertine_M.otf" id="7_2c7wn"]
+[ext_resource type="Texture2D" uid="uid://botpyexjq8x6j" path="res://Assets/Sprites/bush_01.svg" id="8_872hm"]
+[ext_resource type="Script" path="res://Scene/tree.gd" id="8_ruc3s"]
+[ext_resource type="Texture2D" uid="uid://bqmypev07ihmv" path="res://Assets/Sprites/tree_01.svg" id="9_cnfxt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u3eqy"]
 size = Vector2(5643.34, 126.698)
@@ -47,6 +50,28 @@ _data = {
 "RESET": SubResource("Animation_fpt2i"),
 "intro": SubResource("Animation_4g5tl")
 }
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bp747"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_872hm")
+}],
+"loop": true,
+"name": &"bush",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_cnfxt")
+}],
+"loop": true,
+"name": &"tree",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mi6fr"]
+size = Vector2(427.3, 229.8)
 
 [node name="Level" type="Node2D"]
 
@@ -152,9 +177,9 @@ script = ExtResource("6_ad0x6")
 
 [node name="ColorRect" type="ColorRect" parent="Dialogue box"]
 offset_left = -436.0
-offset_top = 8.39911
+offset_top = 25.0
 offset_right = -66.0
-offset_bottom = 74.3991
+offset_bottom = 74.0
 color = Color(0, 0, 0, 0.368627)
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Dialogue box"]
@@ -163,10 +188,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -75.3342
-offset_top = 56.9132
-offset_right = 274.666
-offset_bottom = 109.913
+offset_left = -66.0
+offset_top = 73.0
+offset_right = 304.0
+offset_bottom = 121.0
 grow_horizontal = 2
 grow_vertical = 2
 rotation = 3.14159
@@ -174,7 +199,6 @@ size_flags_horizontal = 6
 size_flags_vertical = 3
 theme_override_fonts/normal_font = ExtResource("7_2c7wn")
 theme_override_font_sizes/normal_font_size = 10
-text = "hello my name is: the one, how are you today, its a good day"
 visible_characters = 0
 visible_ratio = 0.0
 text_direction = 1
@@ -188,5 +212,23 @@ libraries = {
 light_mask = 0
 position = Vector2(4731, -3392)
 scale = Vector2(10, 10)
+collision_mask = 10
 floor_stop_on_slope = false
 speed = 1000
+
+[node name="tree" type="AnimatedSprite2D" parent="."]
+position = Vector2(14304, -54.9999)
+scale = Vector2(10, 10)
+sprite_frames = SubResource("SpriteFrames_bp747")
+animation = &"bush"
+script = ExtResource("8_ruc3s")
+
+[node name="Area2D" type="Area2D" parent="tree"]
+scale = Vector2(1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="tree/Area2D"]
+light_mask = 0
+visibility_layer = 4
+position = Vector2(-5.25, 14.6)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_mi6fr")

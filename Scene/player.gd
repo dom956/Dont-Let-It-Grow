@@ -3,6 +3,7 @@ extends CharacterBody2D
 @export var speed = 50
 var gravity = 1000  # Adjust gravity as needed for better fall speed
 var is_attacking = false
+@onready var bush = $"../tree"
 
 func _ready() -> void:
 	# Disconnect and reconnect signals to avoid duplicates
@@ -44,9 +45,12 @@ func player_move() -> void:
 
 func player_attack() -> void:
 	if Input.is_action_pressed("attacking") and not is_attacking:
-		$AnimatedSprite2D.play("attack")
-		is_attacking = true
-		# Optionally, you can also stop movement while attacking
+		$AnimatedSprite2D.play("attack")  # Play attack animation
+		is_attacking = true  # Set attacking state
+
+		# Check if bush exists and is alive to deal damage
+		if bush and bush.health > 0:
+			bush.take_damage(1)  # Deal damage to the bush
 		velocity.x = 0  # Stop horizontal movement during attack
 
 func _on_animated_sprite_2d_animation_finished() -> void:
