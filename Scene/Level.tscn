@@ -217,18 +217,16 @@ floor_stop_on_slope = false
 speed = 1000
 
 [node name="tree" type="AnimatedSprite2D" parent="."]
-position = Vector2(14304, -54.9999)
-scale = Vector2(10, 10)
+position = Vector2(14264, -1224)
+scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_bp747")
-animation = &"bush"
+animation = &"tree"
 script = ExtResource("8_ruc3s")
 
 [node name="Area2D" type="Area2D" parent="tree"]
-scale = Vector2(1, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="tree/Area2D"]
 light_mask = 0
 visibility_layer = 4
 position = Vector2(-5.25, 14.6)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_mi6fr")
